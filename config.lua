@@ -23,7 +23,7 @@ Config = {
 
                 buy = {
                     {
-                        item = 'bottle_water',
+                        item = 'water_bottle',
                         price = 1,
                     },
                     {
@@ -34,7 +34,7 @@ Config = {
 
                 sell = {
                     {
-                        name = 'bottle_water',
+                        name = 'water_bottle',
                         price = 1,
                         amount = 1000,
                         info = {},
@@ -84,7 +84,7 @@ Config = {
 
                 sell = {
                     {
-                        name = 'bottle_water',
+                        name = 'water_bottle',
                         price = 1,
                         amount = 1000,
                         info = {},
@@ -111,4 +111,5 @@ Config = {
 
             }
         }
+    }
 }
