@@ -1,5 +1,5 @@
 # gp-traders
-Simple trade system where you can sell / buy items from npc via qb-target
+Simple trade system for QbCore where you can sell / buy items from npc via qb-target
 
 - Multi locations
 - Full support language files to easy translate
