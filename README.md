@@ -57,3 +57,6 @@ Simple trade system for QbCore where you can sell / buy items from npc via qb-ta
             }
         },
 ```
+
+#Special thanks to: 
+- [BerkieB](https://github.com/BerkieBb)
