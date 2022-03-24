@@ -3,7 +3,7 @@ Simple trade system where you can sell / buy items from npc via qb-target
 
 - Multi locations
 - Full support language files to easy translate
-- Easy to config, you can change peds, location, sell / buy tables, voice
+- Easy to config, you can change peds, location, sell / buy tables, voice, blips
 
 ![alt text](https://i.imgur.com/T1AcMwk.png)
 ![alt text](https://i.imgur.com/tkTknzc.png)
