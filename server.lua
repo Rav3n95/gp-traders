@@ -1,7 +1,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
 QBCore.Functions.CreateCallback('gp-trade:server:getConfig', function(source, cb)
-    return cb(Config)
+    cb(Config)
 end)
 
 QBCore.Functions.CreateCallback('gp-trade:server:getInv', function(source, cb)

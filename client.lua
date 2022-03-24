@@ -8,7 +8,7 @@ local function _CreatePed(hash, coords, scenario)
 
     RequestModel(hash)
     while not HasModelLoaded(hash) do
-        Citizen.Wait(5)
+        Wait(0)
     end
 
     ped = CreatePed(4, hash, coords, false, false)
@@ -126,7 +126,6 @@ end)
 
 RegisterNetEvent('gp-trade:client:OpenSellMenu', function(data)
     QBCore.Functions.TriggerCallback('gp-trade:server:getInv', function(inventory)
-        local PlyInv = inventory
 
         local sellMenu = {
             {
@@ -135,7 +134,7 @@ RegisterNetEvent('gp-trade:client:OpenSellMenu', function(data)
 			}
         }
 
-        for k,v in pairs(PlyInv) do
+        for k,v in pairs(inventory) do
 			for i = 1, #data.items do
 				if v.name == data.items[i].item then
 				sellMenu[#sellMenu +1] = {
