@@ -1,30 +1,48 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local _PlayerPedId, _GetEntityCoords, ped
+local ped
 local traderBuyGoods, traderSellGoods = {}, {}
 local sellItems, buyItems = false, false
 
+-- Functions
+local function _CreatePed(hash, coords, scenario)
+
+    RequestModel(hash)
+    while not HasModelLoaded(hash) do
+        Citizen.Wait(5)
+    end
+
+    ped = CreatePed(4, hash, coords, false, false)
+    SetEntityAsMissionEntity(ped, true, true)
+    SetPedHearingRange(ped, 0.0)
+    SetPedSeeingRange(ped, 0.0)
+    SetPedAlertness(ped, 0.0)
+    SetPedFleeAttributes(ped, 0, 0)
+    SetBlockingOfNonTemporaryEvents(ped, true)
+    SetPedCombatAttributes(ped, 46, true)
+    TaskStartScenarioInPlace(ped, scenario, 0, true)
+    SetEntityInvincible(ped, true)
+    SetEntityCanBeDamaged(npc,false)
+    SetEntityProofs(ped, true, true, true, true, true, true, 1, true)
+    FreezeEntityPosition(ped, true)
+end
+
+-- Threads
 CreateThread(function()
+
+    _PlayerPedId = PlayerPedId()
 
     QBCore.Functions.TriggerCallback('gp-trade:server:getConfig', function(Config)
         
         for k, v in pairs(Config.Traders) do
             for i = 1, #v.coords do
-                print(v.model)
+
                 _CreatePed(GetHashKey(v.model), vector4(v.coords[i].x, v.coords[i].y, v.coords[i].z -1, v.coords[i].w), v.scenario)
 
                 local blipcoord = vector2(v.coords[i].x, v.coords[i].y)
                 local blipInfo = v.blip
+
                 if blipInfo.Show then
-            
-                    local traderBlip = AddBlipForCoord(blipcoord)
-                    SetBlipSprite(traderBlip, blipInfo.Type)
-                    SetBlipScale(traderBlip, blipInfo.Scale)
-                    SetBlipColour(traderBlip, blipInfo.Color)
-                    SetBlipAsShortRange(traderBlip, true)
-                    BeginTextCommandSetBlipName('STRING')
-                    AddTextComponentSubstringPlayerName(blipInfo.Name)
-                    EndTextCommandSetBlipName(traderBlip)
-            
+                    QBCore.Functions.CreateBlip(blipcoord, blipInfo.Type, 2, blipInfo.Scale, blipInfo.Color, true, blipInfo.Name)
                 end
 
                 exports['qb-target']:AddTargetEntity(ped, {
@@ -34,23 +52,20 @@ CreateThread(function()
                             action = function(entity)
                                 traderBuyGoods, traderSellGoods = {}, {}
                                 sellItems, buyItems = false, false
-                                local coord = GetEntityCoords(PlayerPedId())
-                                local traderCoord = vector3(v.coords[i].x, v.coords[i].y, v.coords[i].z)
-                                local traderDistance = #(coord - traderCoord)
                                 local traderBuy = v.items.buy
                                 local traderSell = v.items.sell
 
                                 if v.buyItems == true then
                                     buyItems = true
                                     for i = 1, #traderBuy do
-                                        table.insert(traderBuyGoods, traderBuy[i])
+                                        traderBuyGoods[#traderBuyGoods+1] = traderBuy[i]
                                     end
                                 end
 
                                 if v.sellItems == true then
                                     sellItems = true
                                     for i = 1, #traderSell do
-                                        table.insert(traderSellGoods, traderSell[i])
+                                        traderSellGoods[#traderSellGoods+1] = traderSell[i]
                                     end
                                 end
                                 PlayPedAmbientSpeechWithVoiceNative( entity, 'GENERIC_HI', v.voice, 'SPEECH_PARAMS_STANDARD', 1);
@@ -67,6 +82,7 @@ CreateThread(function()
     end)
 end)
 
+-- Events
 RegisterNetEvent('gp-trade:client:OpenMenu', function()
 
     local openShop = {
@@ -187,26 +203,3 @@ RegisterNetEvent('gp_trade:client:OpenShop', function()
 
     TriggerServerEvent('inventory:server:OpenInventory', 'shop', 'Trader', ShopItems)
 end)
-
--- Functions
-function _CreatePed(hash, coords, scenario)
-
-    RequestModel(hash)
-    while not HasModelLoaded(hash) do
-        Citizen.Wait(5)
-    end
-
-    ped = CreatePed(4, hash, coords, false, false)
-    SetEntityAsMissionEntity(ped, true, true)
-    SetPedHearingRange(ped, 0.0)
-    SetPedSeeingRange(ped, 0.0)
-    SetPedAlertness(ped, 0.0)
-    SetPedFleeAttributes(ped, 0, 0)
-    SetBlockingOfNonTemporaryEvents(ped, true)
-    SetPedCombatAttributes(ped, 46, true)
-    TaskStartScenarioInPlace(ped, scenario, 0, true)
-    SetEntityInvincible(ped, true)
-    SetEntityCanBeDamaged(npc,false)
-    SetEntityProofs(ped, true, true, true, true, true, true, 1, true)
-    FreezeEntityPosition(ped, true)
-end
