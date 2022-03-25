@@ -8,7 +8,15 @@ QBCore.Functions.CreateCallback('gp-trade:server:getInv', function(source, cb)
     local Player = QBCore.Functions.GetPlayer(source)
     local inventory = Player.PlayerData.items
 
-    return cb(inventory)
+    cb(inventory)
+end)
+
+QBCore.Functions.CreateCallback('gp-trade:server:getLicense', function(source, cb)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local licenseTable = Player.PlayerData.metadata["licences"]
+    
+    cb(licenseTable)
 end)
 
 RegisterNetEvent('gp-trade:server:SellItems', function(itemName, itemAmount, itemPrice)
