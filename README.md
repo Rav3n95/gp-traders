@@ -26,6 +26,7 @@ Simple trade system for QbCore where you can sell / buy items from npc via qb-ta
             voice = 'G_M_Y_Lost_02_WHITE_FULL_01', -- https://pastebin.com/FTeAj4yZ -- Voice of the ped
             sellItems = true, -- Turn on / off the sell option of the ped
             buyItems = true, -- Turn on / off the buy option of the ped
+            license = {false, lable = ''}, -- If you want license check then example: license = {'driver', lable = 'driver'}
             blip = { 
                 Show = true,  -- Show the blip or not
                 Name = 'Shop', -- Lable of the blip
