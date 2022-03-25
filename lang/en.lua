@@ -2,6 +2,7 @@ local Translations = {
     error = {
         negative = 'Trying to sell a negative amount?',
         no_items = 'Not enough items',
+        no_license = 'You do not have %{value} license'
     },
     success = {
         sold = 'You have sold %{value} x %{value2} for $%{value3}',
