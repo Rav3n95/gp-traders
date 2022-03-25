@@ -29,6 +29,8 @@ end
 -- Threads
 CreateThread(function()
 
+    _PlayerPedId = PlayerPedId()
+
     QBCore.Functions.TriggerCallback('gp-trade:server:getConfig', function(Config)
         
         for k, v in pairs(Config.Traders) do
@@ -52,22 +54,50 @@ CreateThread(function()
                                 sellItems, buyItems = false, false
                                 local traderBuy = v.items.buy
                                 local traderSell = v.items.sell
-
-                                if v.buyItems == true then
-                                    buyItems = true
-                                    for i = 1, #traderBuy do
-                                        traderBuyGoods[#traderBuyGoods+1] = traderBuy[i]
+                                local license = v.license[1]
+                                local lisenseLabel = v.license.lable
+                                
+                                if license then
+                                    QBCore.Functions.TriggerCallback('gp-trade:server:getLicense', function(licenseTable)
+                                        if licenseTable[license] then
+                                            if v.buyItems == true then
+                                                buyItems = true
+                                                for i = 1, #traderBuy do
+                                                    traderBuyGoods[#traderBuyGoods+1] = traderBuy[i]
+                                                end
+                                            end
+        
+                                            if v.sellItems == true then
+                                                sellItems = true
+                                                for i = 1, #traderSell do
+                                                    traderSellGoods[#traderSellGoods+1] = traderSell[i]
+                                                end
+                                            end
+        
+                                            PlayPedAmbientSpeechWithVoiceNative( entity, 'GENERIC_HI', v.voice, 'SPEECH_PARAMS_STANDARD', 1);
+                                            TriggerEvent('gp-trade:client:OpenMenu')
+                                        else
+                                            QBCore.Functions.Notify(Lang:t('error.no_license', {value = lisenseLabel}), 'error')
+                                        end
+                                    end)
+                                else
+                                    if v.buyItems == true then
+                                        buyItems = true
+                                        for i = 1, #traderBuy do
+                                            traderBuyGoods[#traderBuyGoods+1] = traderBuy[i]
+                                        end
                                     end
-                                end
 
-                                if v.sellItems == true then
-                                    sellItems = true
-                                    for i = 1, #traderSell do
-                                        traderSellGoods[#traderSellGoods+1] = traderSell[i]
+                                    if v.sellItems == true then
+                                        sellItems = true
+                                        for i = 1, #traderSell do
+                                            traderSellGoods[#traderSellGoods+1] = traderSell[i]
+                                        end
                                     end
+
+                                    PlayPedAmbientSpeechWithVoiceNative( entity, 'GENERIC_HI', v.voice, 'SPEECH_PARAMS_STANDARD', 1);
+                                    TriggerEvent('gp-trade:client:OpenMenu')
                                 end
-                                PlayPedAmbientSpeechWithVoiceNative( entity, 'GENERIC_HI', v.voice, 'SPEECH_PARAMS_STANDARD', 1);
-                                TriggerEvent('gp-trade:client:OpenMenu')
                             end,
                             icon = 'fas fa-sign-in-alt',
                             label = Lang:t('info.title'),
