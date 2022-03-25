@@ -2,6 +2,7 @@ local Translations = {
     error = {
         negative = 'Nem negatív mennyiséget próbálsz meg eladni?',
         no_items = 'Nincs elég tárgyad',
+        no_license = 'Nincs %{value} engedélyed'
     },
     success = {
         sold = 'Eladtál %{value} x %{value2}  %{value3}$-ért',
