@@ -12,6 +12,7 @@ Simple trade system for QbCore where you can sell / buy items from npc via qb-ta
 
 # Important: 
 - If you find any bug, please make a issue, i will fix it asap.
+- License should be exist on qb-core metadata. 
 
 # Config: 
 
