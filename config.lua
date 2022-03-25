@@ -11,6 +11,7 @@ Config = {
             voice = 'G_M_Y_Lost_02_WHITE_FULL_01', -- https://pastebin.com/FTeAj4yZ
             sellItems = true,
             buyItems = true,
+            license = {false, lable = ''},
             blip = { 
                 Show = true, 
                 Name = 'Hunter Shop',
@@ -69,6 +70,7 @@ Config = {
             voice = 'G_M_Y_Lost_02_WHITE_FULL_01', -- https://pastebin.com/FTeAj4yZ
             sellItems = true,
             buyItems = false,
+            license = {false, lable = ''},
             blip = { 
                 Show = false, 
                 Name = '',
