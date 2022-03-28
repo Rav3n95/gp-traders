@@ -29,8 +29,6 @@ end
 -- Threads
 CreateThread(function()
 
-    _PlayerPedId = PlayerPedId()
-
     QBCore.Functions.TriggerCallback('gp-trade:server:getConfig', function(Config)
         
         for k, v in pairs(Config.Traders) do
