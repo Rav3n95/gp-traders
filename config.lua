@@ -11,7 +11,7 @@ Config = {
             voice = 'G_M_Y_Lost_02_WHITE_FULL_01', -- https://pastebin.com/FTeAj4yZ
             sellItems = true,
             buyItems = true,
-            license = {false, lable = ''},
+            license = {false, lable = ''}, -- license = {'weapon', lable = 'handgun'}
             blip = { 
                 Show = true, 
                 Name = 'Hunter Shop',
@@ -25,30 +25,22 @@ Config = {
                 buy = {
                     {
                         item = 'water_bottle',
-                        price = 1,
+                        price = 1
                     },
                     {
                         item = 'sandwich',
-                        price = 1,
+                        price = 1
                     }
                 },
 
                 sell = {
                     {
                         name = 'water_bottle',
-                        price = 1,
-                        amount = 1000,
-                        info = {},
-                        type = 'item',
-                        slot = 1,
+                        price = 1
                     },
                     {
                         name = 'sandwich',
-                        price = 1,
-                        amount = 1000,
-                        info = {},
-                        type = 'item',
-                        slot = 2,
+                        price = 1
                     }
                 }
 
@@ -87,27 +79,15 @@ Config = {
                 sell = {
                     {
                         name = 'water_bottle',
-                        price = 1,
-                        amount = 1000,
-                        info = {},
-                        type = 'item',
-                        slot = 1,
+                        price = 1
                     },
                     {
                         name = 'sandwich',
-                        price = 1,
-                        amount = 1000,
-                        info = {},
-                        type = 'item',
-                        slot = 2,
+                        price = 1
                     },
                     {
                         name = 'phone',
-                        price = 100,
-                        amount = 1000,
-                        info = {},
-                        type = 'item',
-                        slot = 3,
+                        price = 100
                     }
                 }
 

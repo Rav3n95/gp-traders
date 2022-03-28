@@ -42,7 +42,14 @@ CreateThread(function()
                 local blipInfo = v.blip
 
                 if blipInfo.Show then
-                    QBCore.Functions.CreateBlip(blipcoord, blipInfo.Type, 2, blipInfo.Scale, blipInfo.Color, true, blipInfo.Name)
+                    local traderBlip = AddBlipForCoord(blipcoord)
+                    SetBlipSprite(traderBlip, blipInfo.Type)
+                    SetBlipScale(traderBlip, blipInfo.Scale)
+                    SetBlipColour(traderBlip, blipInfo.Color)
+                    SetBlipAsShortRange(traderBlip, true)
+                    BeginTextCommandSetBlipName('STRING')
+                    AddTextComponentSubstringPlayerName(blipInfo.Name)
+                    EndTextCommandSetBlipName(traderBlip)
                 end
 
                 exports['qb-target']:AddTargetEntity(ped, {
@@ -60,6 +67,7 @@ CreateThread(function()
                                 if license then
                                     QBCore.Functions.TriggerCallback('gp-trade:server:getLicense', function(licenseTable)
                                         if licenseTable[license] then
+
                                             if v.buyItems == true then
                                                 buyItems = true
                                                 for i = 1, #traderBuy do
@@ -69,8 +77,32 @@ CreateThread(function()
         
                                             if v.sellItems == true then
                                                 sellItems = true
+                                                local index = 0
                                                 for i = 1, #traderSell do
-                                                    traderSellGoods[#traderSellGoods+1] = traderSell[i]
+                                                    index = index + 1
+                                                    
+                                                    local data = {}
+                                                    if traderSell[i].info then
+                                                        data = {
+                                                            name = traderSell[i].name,
+                                                            price = traderSell[i].price,
+                                                            amount = 9999,
+                                                            info = traderSell[i].info,
+                                                            type = 'item',
+                                                            slot = index
+                                                        }
+                                                    else
+                                                        data = {
+                                                            name = traderSell[i].name,
+                                                            price = traderSell[i].price,
+                                                            amount = 9999,
+                                                            info = {},
+                                                            type = 'item',
+                                                            slot = index
+                                                        }
+                                                    end
+        
+                                                    traderSellGoods[#traderSellGoods+1] = data
                                                 end
                                             end
         
@@ -81,6 +113,7 @@ CreateThread(function()
                                         end
                                     end)
                                 else
+
                                     if v.buyItems == true then
                                         buyItems = true
                                         for i = 1, #traderBuy do
@@ -90,8 +123,32 @@ CreateThread(function()
 
                                     if v.sellItems == true then
                                         sellItems = true
+                                        local index = 0
                                         for i = 1, #traderSell do
-                                            traderSellGoods[#traderSellGoods+1] = traderSell[i]
+                                            index = index + 1
+                                            
+                                            local data = {}
+                                            if traderSell[i].info then
+                                                data = {
+                                                    name = traderSell[i].name,
+                                                    price = traderSell[i].price,
+                                                    amount = 9999,
+                                                    info = traderSell[i].info,
+                                                    type = 'item',
+                                                    slot = index
+                                                }
+                                            else
+                                                data = {
+                                                    name = traderSell[i].name,
+                                                    price = traderSell[i].price,
+                                                    amount = 9999,
+                                                    info = {},
+                                                    type = 'item',
+                                                    slot = index
+                                                }
+                                            end
+
+                                            traderSellGoods[#traderSellGoods+1] = data
                                         end
                                     end
 
@@ -103,7 +160,7 @@ CreateThread(function()
                             label = Lang:t('info.title'),
                         },
                     },
-                    distance = 1.5
+                    distance = 2.0
                 })
             end
         end
@@ -224,6 +281,7 @@ end)
 
 RegisterNetEvent('gp_trade:client:OpenShop', function()
     local ShopItems = {}
+
     ShopItems.label = Lang:t('info.title')
     ShopItems.items = traderSellGoods
     ShopItems.slots = #traderSellGoods
