@@ -41,18 +41,14 @@ Simple trade system for QbCore where you can sell / buy items from npc via qb-ta
                 buy = {
                     {
                         item = 'water_bottle', -- Item what the npc will buy from the player
-                        price = 1, -- Price
+                        price = 1 -- Price
                     }
                 },
 
                 sell = { 
                     {
                         name = 'water_bottle', -- Item what the npc will sell to the player 
-                        price = 1,
-                        amount = 1000,
-                        info = {},
-                        type = 'item',
-                        slot = 1,
+                        price = 1 -- Price
                     }
                 }
 
